@@ -8,7 +8,6 @@ const DEFAULT_PORT = 3000;
 const argPort = parse(Deno.args).port;
 // server setup
 const server = serve({ port: argPort ? Number(argPort) : DEFAULT_PORT });
-console.log(`port:${argPort}`);
 
 for await (const req of server) {
   // serve index page

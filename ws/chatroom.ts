@@ -20,13 +20,12 @@ const broadcastEvent = (obj: BroadcastObj) => {
 
 const chatConnection = async (ws: WebSocket) => {
   // add new ws connection to map
+
   const uid = v4.generate();
   sockets.set(uid, ws);
 
   // listen for websocket events
   for await (const ev of ws) {
-    console.log(ev);
-
     // delete socket if connection closed
     if (isWebSocketCloseEvent(ev)) {
       sockets.delete(uid);

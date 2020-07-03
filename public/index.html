@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebSockets Chat</title>
+    <title>Incognito Chat</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
       rel="stylesheet"
@@ -17,7 +17,7 @@
       input {
         font-family: Inter;
       }
-      h1 {
+      h3 {
         text-align: center;
         color: #444;
         margin-bottom: 40px;
@@ -64,19 +64,31 @@
         color: #006aee;
         font-size: 1.4em;
         font-weight: bold;
+        margin-top: 4px;
       }
       .chat-list .mssg {
         font-size: 1.2em;
         margin-top: 4px;
       }
+      .chat-list .time {
+        font-size: 0.7em;
+      }
       .hidden {
         display: none;
+      }
+      footer {
+        position: inherit;
+        bottom: 1%;
+        width: 100%;
+        font-family: monospace;
+        text-align: center;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Ninja Chat</h1>
+      <h3>This is like a masquerade ball. But online and better. Enjoy ;)</h3>
+      <div class="update"></div>
 
       <form class="name-form">
         <input
@@ -109,14 +121,13 @@
       const echoSocketUrl =
         socketProtocol + "//" + window.location.host + "/ws";
       let ws = new WebSocket(echoSocketUrl);
-      // let ws = new WebSocket("ws://" + window.location.host + "/ws");
-      console.log(ws);
+
       // dom refs
       const nameForm = document.querySelector(".name-form");
       const chatroom = document.querySelector(".chatroom");
       const chatList = document.querySelector(".chat-list");
       const chatForm = document.querySelector(".chat-form");
-
+      const peopleList = document.querySelector(".update");
       // name
       let name = "anon";
 
@@ -142,17 +153,28 @@
       const outputMessage = ({ data }) => {
         const { name, mssg } = JSON.parse(data);
 
+        let today = new Date();
+        let time =
+          today.getHours() +
+          ":" +
+          today.getMinutes() +
+          ":" +
+          today.getSeconds();
+
         let template = `
         <li>
+          <div class ='time'>${time}</div>
           <div class='name'>${name}</div>
           <div class='mssg'>${mssg}</div>
         </li>
       `;
         chatList.innerHTML += template;
       };
-
       // setup listener
       ws.addEventListener("message", outputMessage);
     </script>
   </body>
+  <footer>
+    Made by Surya
+  </footer>
 </html>
