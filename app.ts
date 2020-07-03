@@ -3,12 +3,12 @@ import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
 import { chatConnection } from "./ws/chatroom.ts";
 import { parse } from "https://deno.land/std/flags/mod.ts";
 
-const { args } = Deno;
+//const { args } = Deno;
 const DEFAULT_PORT = 3000;
-const argPort = parse(args).port;
+const argPort = parse(Deno.args).port;
 // server setup
 const server = serve({ port: argPort ? Number(argPort) : DEFAULT_PORT });
-console.log("http://localhost:3000/");
+console.log(`port:${argPort}`);
 
 for await (const req of server) {
   // serve index page
