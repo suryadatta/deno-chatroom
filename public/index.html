@@ -104,9 +104,13 @@
 
     <script>
       // new ws connection
-
-      let ws = new WebSocket("ws://" + window.location.host + "/ws");
-
+      const socketProtocol =
+        window.location.protocol === "https:" ? "wss:" : "ws:";
+      const echoSocketUrl =
+        socketProtocol + "//" + window.location.host + "/ws";
+      let ws = new WebSocket(echoSocketUrl);
+      // let ws = new WebSocket("ws://" + window.location.host + "/ws");
+      console.log(ws);
       // dom refs
       const nameForm = document.querySelector(".name-form");
       const chatroom = document.querySelector(".chatroom");
